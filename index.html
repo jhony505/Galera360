@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proteção por Senha</title>
+    <script>
+        // Função para normalizar a entrada do usuário
+        function normalizeInput(input) {
+            // Remove acentos e substitui "ç" por "c"
+            input = input.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ç/g, "c").replace(/Ç/g, "C");
+            // Converte para letras minúsculas para ignorar maiúsculas/minúsculas
+            return input.toLowerCase();
+        }
+
+        // Função para verificar a senha
+        function checkPassword() {
+            // CONFIGURAÇÕES: Edite as variáveis abaixo
+            var correctPassword = "gabriela"; // Defina aqui a senha correta (normalizada, sem acentos, minúsculas)
+            var redirectURL = "https://gallery.revospin.com/#/d/zUbgiHxpLb"; // Substitua pelo link do site para redirecionamento
+
+            // Obtém o valor da senha digitada
+            var password = document.getElementById("password").value;
+            var normalizedPassword = normalizeInput(password);
+
+            // Verifica se a senha está correta
+            if (normalizedPassword === correctPassword) {
+                // Redireciona usando a função padrão, mais compatível com iOS
+                window.location.assign(redirectURL); 
+            } else {
+                alert("Senha incorreta. Tente novamente.");
+            }
+        }
+
+        // Função para alternar a visualização da senha
+        function togglePasswordVisibility() {
+            var passwordInput = document.getElementById("password");
+            var toggleButton = document.getElementById("togglePassword");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleButton.innerText = "Ocultar";
+            } else {
+                passwordInput.type = "password";
+                toggleButton.innerText = "Mostrar";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>Digite a senha para acessar:</h2>
+    <!-- Campo de senha -->
+    <input type="password" id="password" placeholder="Senha">
+    <button id="togglePassword" onclick="togglePasswordVisibility()">Mostrar</button>
+    <br><br>
+    <!-- Botão de verificação -->
+    <button onclick="checkPassword()">Entrar</button>
+</body>
+</html>
